@@ -1,19 +1,21 @@
-trigger:
-- main
-
-pool:
-  vmImage: ubuntu-latest
-
-steps:
-- task: CmdLine@2
-  displayName: 'Install Newman'
-  inputs:
-    script: 'sudo npm install -g newman'
-    workingDirectory: $(System.DefaultWorkingDirectory)
-
-- task: CmdLine@2
-  displayName: 'Run Newman'
-  continueOnError: true
-  inputs:
-    script: 'newman run StarterAPIs.json'
-    workingDirectory: $(System.DefaultWorkingDirectory)
+name: Azure Pipelines
+stages:
+- stage: Build
+  jobs:
+  - job: Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    
+    - task: CmdLine@2
+      displayName: Install Newman
+      inputs:
+        script: 'sudo npm install -g newman'
+        workingDirectory: $(System.DefaultWorkingDirectory)
+    
+    - task: CmdLine@2
+      displayName: Run Newman
+      continueOnError: true
+      inputs:
+        script: 'newman run StarterAPIs.json'
+        workingDirectory: $(System.DefaultWorkingDirectory)
